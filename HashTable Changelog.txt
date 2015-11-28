@@ -1,0 +1,101 @@
+November 25, 2015
+CHANGELOG:
+
+-Reworked Quad method.  Parameters changed to only the HashEntry temp.  Changed the while loop condition to search for AVAILABLE and "negative" keys, they're considered empty.  Changed quadratic probing method to use math.pow.  added variable "size" to function for variable size. Removed double modulos, only need to traverse hash table, return to start of table when index greater than size.
+
+-moved part of code that hashes and increases entries from quad to addEntry method where quad is called.
+
+-added searchQuad method, if value v is not found at key k.  Search through succesive indexes using quadratic probing until at match is found, we encounter null, we encounter the negative of k, or we search through the list size(search the whole table).
+
+-added searchDoubleHash method.  Functionally similar to searchQuad method except uses doublehash searching function.
+
+-added appropriate entries++ to add Entry method.  Previously adding to an index with no collision would not increment entries.
+
+-reworked if condition in addEntry from only checking null to also check for AVAILABLE and "Negative values".  Entries can be added to these as they are considered empty for adding purposes but full for searching purposes.
+
+-reworked double hashing to increment based on key given, h1 = h2+h1 mod size  where h2 is (prime < size)-(h1 mod (prime <size))
+
+-Added size  check to quad and double hash,  now stops if looped as many times as table size (table is full).
+
+-addEntry should be finished at this point unless it needs tweaking due to another method being changed.
+
+-added setKey method to HashEntry class.
+
+-coded conditions for A and N empty marker schemes in remove method.
+
+
+-Started work on replace method to be used in remove method for the case of empty marker scheme 'R'.
+
+-finished replace recursive method. Implementing into remove method.
+
+-added entries-- across remove method.
+
+-Modified isEmpty method to now recognize "AVAILABLE" and "negatve keys" as empty.
+
+-remove method completed with replace scheme, probably some bugs to look for.
+
+-modified quad and double hash methods to increment collisions for every loop that is performed.  *** POSSIBLY MISINFORMED, CORRECT IF ITS FOR EVERY COLLISION, WRONG IF ITS ONLY FOR ORIGINAL ATTEMPT. 
+
+
+
+TO DO:
+
+
+TO CONSIDER:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+November 24, 2015
+CHANGELOG:
+
+-added various comments
+
+-fixed setRehashThreshold from changing multiplier to changing threshold
+
+-added thresholdfactor, initial value set to 0.5.  Initialized to 0.5 because quadratic collision handling is optimal when at mot half the table is full.
+
+-added method setRehashFactor, sets the resizing factor
+
+-changed initial value of rehashmultiplyer from 2 to 1.15. Positive integers add cells to Table not mutiply the table.
+
+-removed Static modifier from entries, assumes only one Table is ever present.  If two tables exist, inaccurately represents size of both.
+
+-removed Static modifier from collision, similar reasoning to entries.  Renamed collisions to collisionHandling.
+
+-added private int collisions to count number of collisions that occur, initialized to 0.
+
+-removed static modifier from getCollision method, renamed getCollision to getCollisionHandling.
+
+-added entries++ in quad and double hash when successful, added entries++ when no collision handling needed.
+
+-updated remove method to work with empty marker scheme.
+
+TO DO:
+
+- If rehash multiplier is positive integer, add that many cells to table.  If decimal/factor, multiply size by factor(eg. 1.2 times or if myltiplier is 2 add 2 cells).
+
+-if index is removed, handle it based on setEmptyMarkerScheme.
+
+-change how size works,  it should only return entries not alter it too.  Make add increase entries by 1, make a successful remove decrease entries by 1. 
+
+
+
+
+THINGS TO CONSIDER:
+
+-In addEntry method, potentially adds entry to two adjacent index.  Consider changing 3rd if statement to else if.
+
+-added test method for experimental testing, removed checking next index if collision,  rearranged quad and double handling,  quad is the default(Q or an invalid type resorts to quad),  if D is set use double.  Increment entries by 1 when entry successfully added.
+
+-Use recursion for quad and double to keep track of collisions.
